@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Media List
+{% endblock %}
+
+{% block content %}
+    <h1>Media List</h1>
+    <ul>
+        {% for item in media_items %}
+            <li>{{ item.title }} ({{ item.media_type }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
