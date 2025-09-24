@@ -14,8 +14,14 @@ body {
     color: whitesmoke;
 }
 
-h1, p {
+h1 {
     text-align: center;
+    font-size: 2rem;
+}
+
+p {
+    text-align: center;
+    font-size: 1rem;
 }
 
 nav {

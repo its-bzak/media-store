@@ -18,6 +18,7 @@ class Media(models.Model):
     genre = models.CharField(max_length=100)
     media_type = models.CharField(max_length=100, choices=MEDIA_TYPES)
     stock_quantity = models.PositiveIntegerField(default=0)
+    slug = models.SlugField(unique=True, blank=True, null=True)
 
     def __str__(self):
         return f"{self.title} ({self.media_type})"

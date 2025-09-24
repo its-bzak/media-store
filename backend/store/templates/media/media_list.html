@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block content %}
+    <section>
     <h1>Media List</h1>
-    <ul>
         {% for item in media_items %}
-            <li>{{ item.title }} ({{ item.media_type }})</li>
+            <article class="media">
+                <h2>
+                    <a href="{% url 'page' slug=item.slug %}">
+                        {{item.title}}
+                    </a>
+                </h2>
+                <p>{{ item.genre }}</p>
+                <p>{{ item.buyprice }}</p>
+                <p>{{ item.stock_quantity }}</p>
+            </article>
         {% endfor %}
-    </ul>
+    </section>
 {% endblock %}
