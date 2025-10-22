@@ -1,23 +1,48 @@
-{% extends 'layout.html' %}
-
-{% block title %}
-    Media List
-{% endblock %}
+{% extends "layout.html" %}
+{% block title %}Inventory | Media Store{% endblock %}
 
 {% block content %}
-    <section>
-    <h1>Media List</h1>
+<main class="inventory-container">
+    <header class="inventory-header">
+        <h1>🎬 Media Inventory</h1>
+        <p>Browse all available media in stock</p>
+    </header>
+
+    {% if media_items %}
+    <div class="inventory-grid">
         {% for item in media_items %}
-            <article class="media">
-                <h2>
-                    <a href="{% url 'page' slug=item.slug %}">
-                        {{item.title}}
-                    </a>
-                </h2>
-                <p>{{ item.genre }}</p>
-                <p>{{ item.buyprice }}</p>
-                <p>{{ item.stock_quantity }}</p>
-            </article>
+        <div class="media-card">
+            <div class="media-card-content">
+                <h2 class="media-title">{{ item.title }}</h2>
+                <p class="media-genre">{{ item.genre }} • {{ item.get_media_type_display }}</p>
+
+                <div class="media-pricing">
+                    <p><strong>Buy:</strong> ${{ item.buyprice }}</p>
+                    <p><strong>Rent:</strong> ${{ item.rentalprice }}</p>
+                </div>
+
+                <p class="stock-status
+                    {% if item.stock_quantity > 5 %} in-stock
+                    {% elif item.stock_quantity > 0 %} low-stock
+                    {% else %} out-of-stock {% endif %}">
+                    {% if item.stock_quantity > 0 %}
+                        {{ item.stock_quantity }} in stock
+                    {% else %}
+                        Out of stock
+                    {% endif %}
+                </p>
+
+                {% if item.slug %}
+                    <a class="btn-view" href="{% url 'media_page' slug=item.slug %}">View Details</a>
+                {% else %}
+                    <span class="btn-disabled">No details</span>
+                {% endif %}
+            </div>
+        </div>
         {% endfor %}
-    </section>
+    </div>
+    {% else %}
+        <p class="empty-msg">No media currently available.</p>
+    {% endif %}
+</main>
 {% endblock %}
