@@ -1,48 +1,56 @@
 {% extends "layout.html" %}
-{% block title %}Inventory | Media Store{% endblock %}
+{% load static %}
+{% block title %}Shop | Media Store{% endblock %}
+
 
 {% block content %}
-<main class="inventory-container">
-    <header class="inventory-header">
-        <h1>🎬 Media Inventory</h1>
-        <p>Browse all available media in stock</p>
-    </header>
+<main class="shop-container">
+    <aside class="user-info">
 
-    {% if media_items %}
-    <div class="inventory-grid">
-        {% for item in media_items %}
-        <div class="media-card">
-            <div class="media-card-content">
-                <h2 class="media-title">{{ item.title }}</h2>
-                <p class="media-genre">{{ item.genre }} • {{ item.get_media_type_display }}</p>
+    </aside>
 
-                <div class="media-pricing">
-                    <p><strong>Buy:</strong> ${{ item.buyprice }}</p>
-                    <p><strong>Rent:</strong> ${{ item.rentalprice }}</p>
-                </div>
-
-                <p class="stock-status
-                    {% if item.stock_quantity > 5 %} in-stock
-                    {% elif item.stock_quantity > 0 %} low-stock
-                    {% else %} out-of-stock {% endif %}">
-                    {% if item.stock_quantity > 0 %}
-                        {{ item.stock_quantity }} in stock
-                    {% else %}
-                        Out of stock
-                    {% endif %}
-                </p>
-
-                {% if item.slug %}
-                    <a class="btn-view" href="{% url 'media_page' slug=item.slug %}">View Details</a>
-                {% else %}
-                    <span class="btn-disabled">No details</span>
-                {% endif %}
+    <section class="product-grid-section">
+        <header class="product-header">
+            <h1>Welcome to the Media Store!</h1>
+            <p>Take a look at our selection!</p>
+            <div class="product-filter">
+                <label for="filterSelect">Filter Items:</label>
+                <select id="filterSelect" name="filterSelect">
+                    <option value="All Items">All Items</option>
+                    <option value="Books">Books</option>
+                    <option value="Movies">Movies</option>
+                    <option value="Records">Records</option>
+                    <option value="Video Games">Video Games</option>
+                </select>
+        <h2>Availability</h2>
+                <input type="checkbox"> Show In-Stock Only</input>
             </div>
+        </header>
+
+        {% if media_items %}
+        <div class="product-grid">
+            {% for item in media_items %}
+            <div class="product-card">
+                <div class="product-info">
+                    <h3 class="product-title">{{ item.title }}</h3>
+                    <p class="product-genre">{{ item.genre }} | {{ item.get_media_type_display }}</p>
+                    <p class="product-price">
+                        <span class="buy-price">${{ item.buyprice }} to buy, or </span>
+                        {% if item.rentalprice > 0 %}
+                        <span class="rental-price">${{ item.rentalprice }} to rent</span>
+                        {% endif %}
+                    </p>
+                    {% if item.stock_quantity == 0 %}
+                        <span class="stock-label out-of-stock">Out of Stock</span>
+                    {% endif %}
+                    <a href="{% url 'media_page' slug=item.slug %}" class="btn-view">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-    {% else %}
-        <p class="empty-msg">No media currently available.</p>
-    {% endif %}
+        {% else %}
+            <p class="empty-msg">No items currently in stock.</p>
+        {% endif %}
+    </section>
 </main>
 {% endblock %}
