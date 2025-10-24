@@ -32,7 +32,7 @@ body {
     flex-direction: row-reverse;
 }
 
-.user-info {
+.shopping-cart {
     -ms-flex: 15%;
     flex: 15%;
     background-color: grey;

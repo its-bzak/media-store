@@ -5,7 +5,7 @@
 
 {% block content %}
 <main class="shop-container">
-    <aside class="user-info">
+    <aside class="shopping-cart">
 
     </aside>
 
@@ -35,15 +35,14 @@
                     <h3 class="product-title">{{ item.title }}</h3>
                     <p class="product-genre">{{ item.genre }} | {{ item.get_media_type_display }}</p>
                     <p class="product-price">
-                        <span class="buy-price">${{ item.buyprice }} to buy, or </span>
-                        {% if item.rentalprice > 0 %}
-                        <span class="rental-price">${{ item.rentalprice }} to rent</span>
+                        <button class="cart-button">Add to Cart</button>
+                        {% if item.stock_quantity == 0 %}
+                            <button class="buy-button" disabled>Buy Now</button>
+                        {% elif item.stock_quantity > 0 %}
+                        <button class="buy-button">Buy Now</button>
                         {% endif %}
                     </p>
-                    {% if item.stock_quantity == 0 %}
-                        <span class="stock-label out-of-stock">Out of Stock</span>
-                    {% endif %}
-                    <a href="{% url 'media_page' slug=item.slug %}" class="btn-view">View Details</a>
+                    <a href="{% url 'item_info' slug=item.slug %}" class="btn-view">View Item</a>
                 </div>
             </div>
             {% endfor %}

@@ -11,12 +11,12 @@ def media_list(request):
     return render(request, 'media/media_list.html', {'media_items': media_items})
 
 
-def media_page(request, slug):
+def item_info(request, slug):
     """
     Displays a single media item's details.
     """
     media_item = get_object_or_404(Media, slug=slug)
-    return render(request, 'media/media_detail.html', {'media_item': media_item})
+    return render(request, 'media/item_info.html', {'media_item': media_item})
 
 
 def about(request):
