@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Media
+from .models import Media, Customer, Order, OrderItem, Cart
 
 
 def media_list(request):
@@ -12,9 +12,7 @@ def media_list(request):
 
 
 def item_info(request, slug):
-    """
-    Displays a single media item's details.
-    """
+    # Displays a single media item's details.
     media_item = get_object_or_404(Media, slug=slug)
     return render(request, 'media/item_info.html', {'media_item': media_item})
 

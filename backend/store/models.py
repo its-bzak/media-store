@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 import uuid
 
+# == Media Model == #
 
 class Media(models.Model):
     MEDIA_TYPES = [
@@ -34,6 +35,7 @@ class Media(models.Model):
     class Meta:
         ordering = ['title']
 
+# == Customer Model == #
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -44,6 +46,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.username if self.user else "Guest Customer"
 
+# == Order + OrderItem Models == #
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -72,3 +75,31 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} × {self.media.title}"
+
+# == Cart + CartItem Models == #
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Cart ({self.user.username if self.user else 'Guest'})"
+
+    def get_total_price(self):
+        return sum(item.get_total_price() for item in self.items.all())
+
+    def get_total_items(self):
+        return sum(item.quantity for item in self.items.all())
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name="items", on_delete=models.CASCADE)
+    media = models.ForeignKey(Media, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.media.title} × {self.quantity}"
+
+    def get_total_price(self):
+        return self.media.buyprice * self.quantity
