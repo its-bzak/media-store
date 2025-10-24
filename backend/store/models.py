@@ -21,7 +21,7 @@ class Media(models.Model):
     slug = models.SlugField(unique=True, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        """Automatically generate a unique slug if not provided."""
+        """Generate unique slug"""
         if not self.slug:
             base_slug = slugify(self.title)
             unique_id = uuid.uuid4().hex[:6]

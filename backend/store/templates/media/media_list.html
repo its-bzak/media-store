@@ -2,54 +2,60 @@
 {% load static %}
 {% block title %}Shop | Media Store{% endblock %}
 
-
 {% block content %}
 <main class="shop-container">
-    <aside class="shopping-cart">
+  <aside class="shopping-cart">
+    <!-- To-Do Shopping Cart -->
+  </aside>
 
-    </aside>
+  <section class="product-grid-section">
+    <header class="product-header">
+      <h1>Welcome to the Media Store!</h1>
+      <p>Take a look at our selection!</p>
 
-    <section class="product-grid-section">
-        <header class="product-header">
-            <h1>Welcome to the Media Store!</h1>
-            <p>Take a look at our selection!</p>
-            <div class="product-filter">
-                <label for="filterSelect">Filter Items:</label>
-                <select id="filterSelect" name="filterSelect">
-                    <option value="All Items">All Items</option>
-                    <option value="Books">Books</option>
-                    <option value="Movies">Movies</option>
-                    <option value="Records">Records</option>
-                    <option value="Video Games">Video Games</option>
-                </select>
+      <div class="product-filter">
+        <label for="filterSelect">Filter Items:</label>
+        <select id="filterSelect" name="filterSelect">
+          <option value="All Items">All Items</option>
+          <option value="book">Books</option>
+          <option value="movie">Movies</option>
+          <option value="record">Records</option>
+          <option value="game">Video Games</option>
+        </select>
+
         <h2>Availability</h2>
-                <input type="checkbox"> Show In-Stock Only</input>
-            </div>
-        </header>
+        <label for="inStockOnly">
+          <input type="checkbox" id="inStockOnly" name="inStockOnly">
+          Show In-Stock Only
+        </label>
+      </div>
+    </header>
 
-        {% if media_items %}
-        <div class="product-grid">
-            {% for item in media_items %}
-            <div class="product-card">
-                <div class="product-info">
-                    <h3 class="product-title">{{ item.title }}</h3>
-                    <p class="product-genre">{{ item.genre }} | {{ item.get_media_type_display }}</p>
-                    <p class="product-price">
-                        <button class="cart-button">Add to Cart</button>
-                        {% if item.stock_quantity == 0 %}
-                            <button class="buy-button" disabled>Buy Now</button>
-                        {% elif item.stock_quantity > 0 %}
-                        <button class="buy-button">Buy Now</button>
-                        {% endif %}
-                    </p>
-                    <a href="{% url 'item_info' slug=item.slug %}" class="btn-view">View Item</a>
-                </div>
-            </div>
-            {% endfor %}
+    {% if media_items %}
+    <div class="product-grid">
+      {% for item in media_items %}
+      <div class="product-card" data-type="{{ item.media_type }}">
+        <div class="product-info">
+          <h3 class="product-title">{{ item.title }}</h3>
+          <p class="product-genre">{{ item.genre }} | {{ item.get_media_type_display }}</p>
+
+          <div class="product-price">
+            <button class="cart-button">Add to Cart</button>
+            {% if item.stock_quantity == 0 %}
+              <button class="buy-button" disabled>Buy Now</button>
+            {% else %}
+              <button class="buy-button">Buy Now</button>
+            {% endif %}
+          </div>
+
+          <a href="{% url 'item_info' slug=item.slug %}" class="btn-view">View Item</a>
         </div>
-        {% else %}
-            <p class="empty-msg">No items currently in stock.</p>
-        {% endif %}
-    </section>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+      <p class="empty-msg">No items currently in stock.</p>
+    {% endif %}
+  </section>
 </main>
 {% endblock %}
