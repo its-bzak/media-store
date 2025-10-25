@@ -30,3 +30,14 @@ def cart_view(request):
     (Will be implemented later using sessions or a Cart model.)
     """
     return render(request, 'media/cart.html')
+
+def view_cart(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    items = cart.items.all()
+    total = cart.get_total_price()
+
+    return render(request, 'cart.html', {
+        'cart': cart,
+        'items': items,
+        'total': total
+    })
