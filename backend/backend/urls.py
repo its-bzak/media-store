@@ -15,7 +15,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
 
     # Store app URLs (everything under /media/)
-    path('media/', include('store.urls')),
+    path('store/', include('store.urls')),
 ]
 
 # Optional: handle static/media files in development
