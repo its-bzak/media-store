@@ -71,3 +71,29 @@ def add_to_cart(request, slug):
 
     return redirect('view_cart')
 
+@login_required
+@transaction.atomic
+def checkout(request):
+    cart = Cart.objects.get(user=request.user)
+    items = cart.items.all()
+
+    if not items:
+        return redirect(request, 'store/checkout_empty.html')
+
+    order = Order.objects.create(
+        user=request.user,
+        total_price=cart.get_total_price(),
+        status='pending'
+    )
+
+    for item in items:
+        OrderItem.objects.create(
+            order=order,
+            media=item.media,
+            quantity=item.quantity,
+            price=item.price,
+        )
+
+    cart.items.all().delete()
+
+    return render(request, 'store/checkout_success.html', {'order': order})

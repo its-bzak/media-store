@@ -31,5 +31,13 @@
   {% else %}
     <p>Your cart is empty.</p>
   {% endif %}
+
+    {% if items %}
+        <form action="{% url 'checkout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="checkout-button">Checkout</button>
+        </form>
+    {% endif %}
+
 </main>
 {% endblock %}

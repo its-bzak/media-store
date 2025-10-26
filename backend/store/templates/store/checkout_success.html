@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Checkout Success
+{% endblock %}
+
+{% block content %}
+    <h2>Thank you for your purchase!</h2>
+    <p>Your order ID is <strong> #{{ order.id }} </strong></p>
+    <p>Total paid: ${{ order.total_price }}</p>
+    <a href="{% url 'media_list' %}">Continue Shopping></a>
+{% endblock %}
+
