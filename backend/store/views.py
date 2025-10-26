@@ -71,6 +71,14 @@ def add_to_cart(request, slug):
 
     return redirect('view_cart')
 
+def remove_from_cart(request, item_id):
+    try:
+        cart_item = CartItem.objects.get(id=item_id, cart__user=request.user)
+        cart_item.delete()
+    except CartItem.DoesNotExist:
+        pass
+    return redirect('view_cart')
+
 @login_required
 @transaction.atomic
 def checkout(request):

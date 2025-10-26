@@ -22,6 +22,12 @@
           <td>{{ item.quantity }}</td>
           <td>${{ item.media.buyprice }}</td>
           <td>${{ item.get_total_price }}</td>
+        <td>
+            <form action=" "{% url 'remove_from_cart' item.id %} method="POST">
+            {% csrf_token %}
+            <button type="submit" class="remove-btn">Remove</button>
+        </form>
+        </td>
         </tr>
         {% endfor %}
       </tbody>
