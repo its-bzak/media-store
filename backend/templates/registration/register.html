@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Create and Account
+{% endblock %}
+
+{% block content %}
+    <h2>Create an Account</h2>
+    <form method="post">
+    {%  csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+    </form>
+{% endblock %}
+
