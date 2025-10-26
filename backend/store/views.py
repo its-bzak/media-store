@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Media, Customer, Order, OrderItem, Cart, CartItem
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.db import transaction
 
 def media_list(request):
     """
@@ -69,3 +70,4 @@ def add_to_cart(request, slug):
         cart_item.save()
 
     return redirect('view_cart')
+
