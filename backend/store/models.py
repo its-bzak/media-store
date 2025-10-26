@@ -14,8 +14,7 @@ class Media(models.Model):
     ]
 
     title = models.CharField(max_length=100)
-    buyprice = models.DecimalField(decimal_places=2, max_digits=6, default=0)
-    rentalprice = models.DecimalField(decimal_places=2, max_digits=6, default=0)
+    price = models.DecimalField(decimal_places=2, max_digits=6, default=0)
     genre = models.CharField(max_length=100)
     media_type = models.CharField(max_length=100, choices=MEDIA_TYPES)
     stock_quantity = models.PositiveIntegerField(default=0)
@@ -46,6 +45,35 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.username if self.user else "Guest Customer"
 
+# == Cart + CartItem Models == #
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Cart"
+
+    def get_total_price(self):
+        return sum(item.get_total_price() for item in self.items.all())
+
+    def get_total_items(self):
+        return sum(item.quantity for item in self.items.all())
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name="items", on_delete=models.CASCADE)
+    media = models.ForeignKey(Media, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(decimal_places=2, max_digits=6, default=0)
+
+    def __str__(self):
+        return f"{self.media.title} × {self.quantity}"
+
+    def get_total_price(self):
+        return self.media.price * self.quantity
+
 # == Order + OrderItem Models == #
 
 class Order(models.Model):
@@ -69,37 +97,14 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, related_name='cart_items', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey(Media, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
+    class Meta:
+        unique_together = ('cart', 'media')
+
     def __str__(self):
         return f"{self.quantity} × {self.media.title}"
 
-# == Cart + CartItem Models == #
-
-class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"Cart ({self.user.username if self.user else 'Guest'})"
-
-    def get_total_price(self):
-        return sum(item.get_total_price() for item in self.items.all())
-
-    def get_total_items(self):
-        return sum(item.quantity for item in self.items.all())
-
-
-class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, related_name="items", on_delete=models.CASCADE)
-    media = models.ForeignKey(Media, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
-
-    def __str__(self):
-        return f"{self.media.title} × {self.quantity}"
-
-    def get_total_price(self):
-        return self.media.buyprice * self.quantity

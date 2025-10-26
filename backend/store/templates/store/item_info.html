@@ -11,9 +11,8 @@
             <div class="product-info">
                     <h3 class="product-title">{{ media_item.title }}</h3>
                     <p class="product-genre">{{ media_item.genre }} | {{ media_item.get_media_type_display }}</p>
-                <p class="product-price">Purchase: ${{ media_item.buyprice }}</p>
-                <p class="rent-price">Rent: ${{ media_item.rentalprice }}</p>
-                        <button class="cart-button">Add to Cart</button>
+                <p class="product-price">Purchase: ${{ media_item.price }}</p>
+                        <a href="{% url 'add_to_cart' slug=media_item.slug %}" class="cart-button">Add to Cart</a>
                     {% if media_item.stock_quantity == 0 %}
                         <button class="buy-button" disabled>Buy Now</button>
                     {% elif media_item.stock_quantity > 0 %}

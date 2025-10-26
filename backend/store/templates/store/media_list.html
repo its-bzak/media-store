@@ -40,7 +40,7 @@
           <p class="product-genre">{{ item.genre }} | {{ item.get_media_type_display }}</p>
 
           <div class="product-price">
-            <button class="cart-button">Add to Cart</button>
+            <a href="{% url 'add_to_cart' slug=item.slug %}" class="cart-button">Add to Cart</a>
             {% if item.stock_quantity == 0 %}
               <button class="buy-button" disabled>Buy Now</button>
             {% else %}

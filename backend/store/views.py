@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Media, Customer, Order, OrderItem, Cart
+from .models import Media, Customer, Order, OrderItem, Cart, CartItem
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
@@ -36,7 +36,7 @@ def cart_view(request):
 def view_cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     items = cart.items.all()
-    total = cart.get_total_price()
+    total = sum(item.get_total_price() for item in items)
 
     return render(request, 'store/cart.html', {
         'cart': cart,
@@ -53,3 +53,19 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+def add_to_cart(request, slug):
+    media_item = get_object_or_404(Media, slug=slug)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    cart_item, created = CartItem.objects.get_or_create(
+        cart=cart,
+        media=media_item,
+        defaults={'quantity': 1, 'price': media_item.price},
+    )
+
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+
+    return redirect('view_cart')

@@ -6,5 +6,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),           # /store/about/
     path('cart/', views.view_cart, name='view_cart'),     # /store/cart/
     path('register/', views.register, name='register'), # / store/register/
+    path('add-to-cart/<slug:slug>/', views.add_to_cart, name='add_to_cart'),
     path('<slug:slug>/', views.item_info, name='item_info'),  # /store/<slug>/
 ]
