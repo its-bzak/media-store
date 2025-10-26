@@ -5,7 +5,9 @@
 {% block content %}
 <main class="shop-container">
   <aside class="shopping-cart">
-    <!-- To-Do Shopping Cart -->
+    <div class="cart-link">
+        <a href="{% url 'view_cart' %}" class="btn-cart-link">View Cart</a>
+    </div>
   </aside>
 
   <section class="product-grid-section">
