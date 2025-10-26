@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Media, Customer, Order, OrderItem, Cart
+from django.contrib.auth.decorators import login_required
 
 
 def media_list(request):
@@ -31,6 +32,7 @@ def cart_view(request):
     """
     return render(request, 'store/cart.html')
 
+@login_required
 def view_cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     items = cart.items.all()

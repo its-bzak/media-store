@@ -4,6 +4,8 @@ URL configuration for backend project.
 
 from django.contrib import admin
 from django.urls import path, include
+from pip._internal.network import auth
+
 from . import views  # project-level views like home and about
 
 urlpatterns = [
@@ -16,6 +18,9 @@ urlpatterns = [
 
     # Store app URLs (everything under /media/)
     path('store/', include('store.urls')),
+
+    #Authentication ie. User login, logout and signup
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 # Optional: handle static/media files in development
