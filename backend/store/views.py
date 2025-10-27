@@ -88,7 +88,7 @@ def add_to_cart(request, slug):
         cart_item.quantity += 1
         cart_item.save()
 
-    return redirect('view_cart')
+    return redirect('media_list')
 
 def remove_from_cart(request, item_id):
     try:
@@ -124,3 +124,8 @@ def checkout(request):
     cart.items.all().delete()
 
     return render(request, 'store/checkout_success.html', {'order': order})
+
+@login_required
+def order_history(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'store/order_history.html', {'orders': orders})
