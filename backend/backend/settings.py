@@ -135,11 +135,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-#To do - Switch db to PostreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mediastore',
+        'USER': 'mediastore_user',
+        'PASSWORD': '4_Barczaks',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
