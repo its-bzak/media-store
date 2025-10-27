@@ -16,20 +16,20 @@
 </head>
 <body>
     <nav>
-        <a href="/">Home</a> |
-        <a href="/about">About</a> |
-        <a href="{% url 'media_list' %}">Media</a>
-        {% if user.is_authenticated %}
-            <span>Hello, {{ user.username }}!</span>
-            <form action="{% url 'logout' %}" method="post" style="display: inline">
+    <a href="{% url 'media_list' %}">Shop</a> |
+    <a href="{% url 'view_cart' %}">Cart</a>
+    {% if user.is_authenticated %}
+        <span>Hello, {{ user.username }}!</span>
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
             {% csrf_token %}
             <button type="submit">Logout</button>
-            </form>
-        {% else %}
-            <a href="{% url 'login' %}">Log In</a>
-            <a href="{% url 'register' %}">Register</a>
-        {% endif %}
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Log In</a>
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
     </nav>
+
     <main>
         {% block content %}
         {% endblock %}

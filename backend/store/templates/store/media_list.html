@@ -41,13 +41,14 @@
           <p class="product-genre">{{ item.genre }} | {{ item.get_media_type_display }}</p>
 
           <div class="product-price">
-            <a href="{% url 'add_to_cart' slug=item.slug %}" class="cart-button">Add to Cart</a>
-            {% if item.stock_quantity == 0 %}
-              <button class="buy-button" disabled>Buy Now</button>
+                <a href="{% url 'add_to_cart' slug=item.slug %}" class="cart-button">Add to Cart</a>
+            {% if item.stock_quantity > 0 %}
+                <a href="{% url 'buy_now' slug=item.slug %}" class="buy-button">Buy Now</a>
             {% else %}
-              <button class="buy-button">Buy Now</button>
+                <button class="buy-button" disabled>Buy Now</button>
             {% endif %}
           </div>
+
 
           <a href="{% url 'item_info' slug=item.slug %}" class="btn-view">View Item</a>
         </div>

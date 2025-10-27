@@ -6,15 +6,14 @@ from django.contrib import admin
 from django.urls import path, include
 from pip._internal.network import auth
 
-from . import views  # project-level views like home and about
+from store import views  # project-level views like home and about
 
 urlpatterns = [
     # Admin site
     path('admin/', admin.site.urls),
 
-    # Main site pages (home & about)
-    path('', views.home, name='home'),
-    path('about/', views.about, name='about'),
+    # Main site page
+    path('', views.media_list, name='home'),
 
     # Store app URLs (everything under /media/)
     path('store/', include('store.urls')),

@@ -30,11 +30,12 @@
             <div class="item-actions">
                 <a href="{% url 'add_to_cart' slug=media_item.slug %}" class="cart-button">Add to Cart</a>
                 {% if media_item.stock_quantity > 0 %}
-                    <button class="buy-button">Buy Now</button>
+                    <a href="{% url 'buy_now' slug=media_item.slug %}" class="buy-button">Buy Now</a>
                 {% else %}
                     <button class="buy-button" disabled>Buy Now</button>
                 {% endif %}
             </div>
+
         </div>
     </main>
 </body>

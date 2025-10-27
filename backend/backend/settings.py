@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,67 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store',
 ]
+
+# Admin Theme Override
+
+JAZZMIN_SETTINGS = {
+    # Branding
+    "site_title": "Media Store Admin",
+    "site_header": "🎬 Media Store Dashboard",
+    "site_brand": "Media Store",
+    "welcome_sign": "Welcome back to the Media Store Admin Panel",
+    "show_recent": False,
+    "recent_actions_limit": 0,
+    "show_ui_builder": True,
+
+    # UI Customizations
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Storefront", "url": "/", "new_window": True},
+        {"model": "auth.User"},
+        {"app": "store"},
+    ],
+
+    # Sidebar
+    "show_sidebar": True,
+    "navigation_expanded": True,
+
+    # Icons Apps / Models
+    "icons": {
+        "auth": "fas fa-users",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users-cog",
+        "store.Media": "fas fa-photo-video",
+        "store.Order": "fas fa-shopping-bag",
+        "store.Cart": "fas fa-shopping-cart",
+        "store.CartItem": "fas fa-box-open",
+        "store.Customer": "fas fa-user-tag",
+    },
+
+    # Theme
+    "theme": "cyborg",
+    "custom_css": None,
+    "custom_js": None,
+    "show_ui_builder": True,
+}
+
+# Etc Customization
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": True,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-dark",
+    "accent": "accent-primary",
+    "navbar": "navbar-dark navbar-primary",
+    "no_navbar_border": False,
+    "sidebar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "theme": "cyborg",
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

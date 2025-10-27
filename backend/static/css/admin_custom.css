@@ -1,0 +1,38 @@
+/* Admin Dashboard CSS */
+
+/* Make right sidebar (Recent Actions) wider */
+section.recent-actions,
+.recent-actions,
+#recent-actions-module {
+    width: 450px !important;       /* Default is ~300px */
+    max-width: 450px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Make the overall dashboard container adjust */
+.dashboard .content {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+/* Prevent text wrapping inside action items */
+.recent-actions .card-body a,
+.recent-actions .card-body span,
+.recent-actions .card-body p {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Optional — make timeline icons smaller and aligned */
+.recent-actions .timeline .timeline-icon {
+    transform: scale(0.85);
+    margin-top: 4px;
+}
+
+/* Optional — tighten spacing for a cleaner look */
+.recent-actions .card {
+    margin-bottom: 10px !important;
+    padding: 6px 10px !important;
+}

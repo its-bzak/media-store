@@ -55,6 +55,24 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+@login_required
+def buy_now(request, slug):
+    media_item = get_object_or_404(Media, slug=slug)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    cart_item, created = CartItem.objects.get_or_create(
+        cart=cart,
+        media=media_item,
+        defaults={'quantity': 1, 'price': media_item.price},
+    )
+
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+
+    return redirect('view_cart')
+
+
 def add_to_cart(request, slug):
     media_item = get_object_or_404(Media, slug=slug)
     cart, created = Cart.objects.get_or_create(user=request.user)
