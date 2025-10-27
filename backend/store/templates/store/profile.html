@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+<main class="profile-page">
+  <h1>My Profile</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Account Info</legend>
+      {{ profile_form.as_p }}
+    </fieldset>
+
+    <fieldset>
+      <legend>Preferences</legend>
+      {{ prefs_form.as_p }}
+    </fieldset>
+
+    <button type="submit" name="save_profile">Save Changes</button>
+  </form>
+
+  <hr>
+
+  <form method="post">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Change Password</legend>
+      {{ password_form.as_p }}
+    </fieldset>
+    <button type="submit" name="change_password">Update Password</button>
+  </form>
+</main>
+{% endblock %}

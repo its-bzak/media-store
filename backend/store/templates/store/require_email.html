@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}
+    Add Email | Media Store
+{% endblock %}
+
+{% block content %}
+<main class="email-required-container">
+  <h1>Almost there!</h1>
+  <p>We just need your email to send your order confirmation.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-primary">Continue to Checkout</button>
+  </form>
+</main>
+{% endblock %}
