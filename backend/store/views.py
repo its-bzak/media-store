@@ -55,7 +55,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
-@login_required
+@login_required(login_url='login')
 def buy_now(request, slug):
     media_item = get_object_or_404(Media, slug=slug)
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -70,9 +70,10 @@ def buy_now(request, slug):
         cart_item.quantity += 1
         cart_item.save()
 
-    return redirect('view_cart')
+    return redirect('checkout')
 
 
+@login_required(login_url='login')
 def add_to_cart(request, slug):
     media_item = get_object_or_404(Media, slug=slug)
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -87,7 +88,7 @@ def add_to_cart(request, slug):
         cart_item.quantity += 1
         cart_item.save()
 
-    return redirect('media_list')
+    return redirect('view_cart')
 
 def remove_from_cart(request, item_id):
     try:
