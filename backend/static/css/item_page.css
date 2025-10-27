@@ -1,24 +1,160 @@
+/* Base CSS */
 * {
-    color: white;
-    background-color: black;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "Segoe UI", sans-serif;
 }
 
-product-title {
-    color: white;
+body {
+  background-color: #f9fafb;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-product-title {
-    color: white;
+/* Nav CSS */
+.item-nav {
+  background-color: #2c3e50;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-product-title {
-    color: white;
+.item-nav .back-link {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
-buy-button {
-    color: white;
+.item-nav .back-link:hover {
+  color: #1abc9c;
 }
 
-cart-button {
-    color: white;
+/* Item Page Layout CSS */
+.item-page {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+}
+
+.item-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem 3rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Text Styling CSS */
+.item-title {
+  font-size: 1.8rem;
+  color: #34495e;
+  margin-bottom: 0.5rem;
+}
+
+.item-genre {
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+}
+
+.item-details {
+  background: #ecf0f1;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.item-price {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.item-stock {
+  font-size: 1rem;
+}
+
+.in-stock {
+  color: #1abc9c;
+  font-weight: 600;
+}
+
+.out-of-stock {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+/* Action Buttons CSS */
+.item-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cart-button, .buy-button {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.cart-button {
+  background-color: #1abc9c;
+  color: white;
+}
+
+.cart-button:hover {
+  background-color: #16a085;
+  transform: scale(1.05);
+}
+
+.buy-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.buy-button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+.buy-button[disabled] {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsiveness CSS */
+@media (max-width: 600px) {
+  .item-card {
+    padding: 1.5rem;
+  }
+
+  .item-title {
+    font-size: 1.5rem;
+  }
+
+  .cart-button, .buy-button {
+    width: 100%;
+  }
 }
